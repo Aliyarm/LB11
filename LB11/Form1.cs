@@ -26,5 +26,10 @@ namespace LB11
         {
 
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
