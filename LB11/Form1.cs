@@ -17,36 +17,50 @@ namespace LB11
             InitializeComponent();
         }
 
-        private int x1, y1, x2, y2, r;
-        private double a;
-        private Pen pen = new Pen(Color.DarkRed, 2);
+        private int x1, y1, x2, y2, r1, x3, y3, r2, x4, y4, r3;
+        private double a, a1, a2;
+
+        private Pen arrow = new Pen(Color.Gray, 2);
+        private Pen frame = new Pen(Color.Black, 2);
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            // Рисуем секундную стрелку
-            g.DrawLine(pen, x1, y1, x2, y2);
-
+            g.DrawLine(arrow, x1, y1, x2, y2); // секундная стрелка
+            g.DrawLine(arrow, x1, y1, x3, y3); // минутная стрелка
+            g.DrawLine(arrow, x1, y1, x4, y4); // часовая стрелка
+            g.DrawEllipse(frame, x1 - r1, y1 - r1, 2*r1, 2*r1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            r = 150; // Радиус стрелки
-            a = 0; // Угол поворота стрелки
-                   // Определяем центр формы – начало стрелки
+            r1 = 150;
+            r2 = 140;
+            r3 = 90;
+            a = 0;
+            a1 = 0;
+            a2 = 0;
             x1 = ClientSize.Width / 2;
             y1 = ClientSize.Height / 2;
             // Конец стрелки
-            x2 = x1 + (int)(r * Math.Cos(a));
-            y2 = y1 - (int)(r * Math.Sin(a));
-
+            x2 = x1 + (int)(r1 * Math.Cos(a));
+            y2 = y1 - (int)(r1 * Math.Sin(a));
+            x3 = x1 + (int)(r2 * Math.Cos(a));
+            y3 = y1 - (int)(r2 * Math.Sin(a));
+            x4 = x1 + (int)(r3 * Math.Cos(a));
+            y4 = y1 - (int)(r3 * Math.Sin(a));
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick_1(object sender, EventArgs e)
         {
-            a -= 0.1; // Уменьшаем угол на 0,1 радиану
-                      // Новые координаты конца стрелки
-            x2 = x1 + (int)(r * Math.Cos(a));
-            y2 = y1 - (int)(r * Math.Sin(a));
+            a -= 0.1;
+            a1 -= 0.01;
+            a2 -= 0.001;
+            x2 = x1 + (int)(r1 * Math.Cos(a));
+            y2 = y1 - (int)(r1 * Math.Sin(a));
+            x3 = x1 + (int)(r2 * Math.Cos(a1));
+            y3 = y1 - (int)(r2 * Math.Sin(a1));
+            x4 = x1 + (int)(r3 * Math.Cos(a2));
+            y4 = y1 - (int)(r3 * Math.Sin(a2));
             // Принудительный вызов события Paint
             Invalidate();
         }
